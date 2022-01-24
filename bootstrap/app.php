@@ -2,8 +2,20 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+/**
+ * Custom env loading. Thanks @patricus
+ * https://stackoverflow.com/questions/65713265/lumen-8-not-using-env-testing
+ */
+$env = env('APP_ENV');
+$file = '.env.'.$env;
+
+if (!file_exists(dirname(__DIR__).'/'.$file)) {
+    $file = null;
+}
+
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
-    dirname(__DIR__)
+    dirname(__DIR__),
+    $file
 ))->bootstrap();
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
