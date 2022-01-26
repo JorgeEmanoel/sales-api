@@ -39,6 +39,17 @@ class Sale extends Model
         return $this;
     }
 
+    public function cancel()
+    {
+        $this->status = self::STATUS_CANCELLED;
+        $this->save();
+    }
+
+    public function cancelled()
+    {
+        return $this->status === self::STATUS_CANCELLED;
+    }
+
     public function scopeFromClient($query, $client)
     {
         if ($client instanceof Client) {

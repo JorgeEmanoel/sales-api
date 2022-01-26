@@ -155,7 +155,7 @@ class SaleController extends Controller
         );
     }
 
-    public function products(Request $request, $id)
+    public function products($id)
     {
         $sale = Sale::find($id);
 
@@ -169,6 +169,34 @@ class SaleController extends Controller
 
         return response(
             SaleProductResource::collection($products),
+            Response::HTTP_OK
+        );
+    }
+
+    public function cancel($id)
+    {
+        $sale = Sale::find($id);
+
+        if (!$sale) {
+            return response([
+                'message' => 'Sale not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($sale->cancelled()) {
+            return response([
+                'message' => 'Sale already cancelled'
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        foreach ($sale->saleProducts()->with('product')->get() as $sale_product) {
+            $sale_product->product->increaseQuantity($sale_product->quantity)->save();
+        }
+
+        $sale->cancel();
+
+        return response(
+            new SaleResource($sale),
             Response::HTTP_OK
         );
     }

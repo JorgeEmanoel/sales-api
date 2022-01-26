@@ -28,6 +28,12 @@ class Product extends Model
         return $this;
     }
 
+    public function increaseQuantity(int $quantity)
+    {
+        $this->quantity += $quantity;
+        return $this;
+    }
+
     public function scopeFromProvider($query, $provider)
     {
         if ($provider instanceof Provider) {

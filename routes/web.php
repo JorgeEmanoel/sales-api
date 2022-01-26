@@ -47,5 +47,5 @@ $router->group(['prefix' => 'sales'], function () use ($router) {
     $router->post('/', 'SaleController@store');
     $router->get('{id}', 'SaleController@show');
     $router->put('{id}', 'SaleController@update');
-    $router->delete('{id}', 'SaleController@delete');
+    $router->delete('{id}', 'SaleController@cancel');
 });
