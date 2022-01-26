@@ -24,4 +24,22 @@ class Product extends Model
 
         return $query->where('provider_id', $provider);
     }
+
+    public function setQuantityAttribute($value)
+    {
+        $this->attributes['quantity'] = intval($value);
+    }
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = (float) str_replace(
+            ',',
+            '.',
+            str_replace(
+                '.',
+                '',
+                $value
+            )
+        );
+    }
 }

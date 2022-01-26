@@ -46,4 +46,9 @@ class Provider extends Model
             $type
         );
     }
+
+    public function setDocumentAttribute($value)
+    {
+        $this->attributes['document'] = preg_replace('/\D/', '', $value);
+    }
 }

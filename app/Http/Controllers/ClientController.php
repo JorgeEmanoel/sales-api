@@ -38,7 +38,7 @@ class ClientController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('clients')->ignore($id)
+                Rule::unique('clients')
             ]
         ]);
 
