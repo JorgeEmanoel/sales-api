@@ -40,3 +40,12 @@ $router->group(['prefix' => 'clients'], function () use ($router) {
     $router->put('{id}', 'ClientController@update');
     $router->delete('{id}', 'ClientController@delete');
 });
+
+$router->group(['prefix' => 'sales'], function () use ($router) {
+    $router->get('/', 'SaleController@index');
+    $router->get('/{id}/products', 'SaleController@products');
+    $router->post('/', 'SaleController@store');
+    $router->get('{id}', 'SaleController@show');
+    $router->put('{id}', 'SaleController@update');
+    $router->delete('{id}', 'SaleController@delete');
+});

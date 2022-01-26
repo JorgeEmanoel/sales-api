@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->integer('total');
             $table->enum('status', [
+                'pending',
                 'placed',
                 'paid',
                 'cancelled'

@@ -16,7 +16,8 @@ class CreateSaleProductsTable extends Migration
         Schema::create('sale_products', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
-            $table->integer('total');
+            $table->float('total');
+            $table->float('paid_unit_price');
 
             $table->unsignedBigInteger('sale_id');
             $table->foreign('sale_id')

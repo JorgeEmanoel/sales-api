@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Number;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,6 +17,17 @@ class Product extends Model
         'provider_id'
     ];
 
+    public function decreaseQuantity(int $quantity)
+    {
+        $this->quantity -= $quantity;
+
+        if ($this->quantity < 0) {
+            throw new \Exception('Invalid quantity');
+        }
+
+        return $this;
+    }
+
     public function scopeFromProvider($query, $provider)
     {
         if ($provider instanceof Provider) {
@@ -27,19 +39,11 @@ class Product extends Model
 
     public function setQuantityAttribute($value)
     {
-        $this->attributes['quantity'] = intval($value);
+        $this->attributes['quantity'] = (new Number($value))->toInteger();
     }
 
     public function setPriceAttribute($value)
     {
-        $this->attributes['price'] = (float) str_replace(
-            ',',
-            '.',
-            str_replace(
-                '.',
-                '',
-                $value
-            )
-        );
+        $this->attributes['price'] = (new Number($value))->toFloat();
     }
 }
