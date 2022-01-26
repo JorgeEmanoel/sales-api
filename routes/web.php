@@ -16,3 +16,20 @@
 $router->get('/', function () {
     return 'Sales-API';
 });
+
+$router->group(['prefix' => 'providers'], function () use ($router) {
+    $router->get('/', 'ProviderController@index');
+    $router->post('/', 'ProviderController@store');
+    $router->get('{id}', 'ProviderController@show');
+    $router->put('{id}', 'ProviderController@update');
+    $router->delete('{id}', 'ProviderController@delete');
+});
+
+$router->group(['prefix' => 'products'], function () use ($router) {
+    $router->get('/', 'ProductController@index');
+    $router->post('/', 'ProductController@store');
+    $router->get('{id}', 'ProductController@show');
+    $router->put('{id}', 'ProductController@update');
+    $router->delete('{id}', 'ProductController@delete');
+});
+

@@ -19,15 +19,8 @@ class CreateClientsTable extends Migration
             $table->char('phone', 11);
             $table->char('email', 240)->nullable();
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
-
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

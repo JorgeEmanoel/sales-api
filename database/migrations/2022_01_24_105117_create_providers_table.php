@@ -16,10 +16,12 @@ class CreateProvidersTable extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->char('name', 240);
-            $table->char('document', 14);
+            $table->char('document', 14)->unique();
             $table->enum('document_type', ['cpf', 'cnpj']);
             $table->boolean('shared')->default(false);
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
