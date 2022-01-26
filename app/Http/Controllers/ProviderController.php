@@ -50,7 +50,7 @@ class ProviderController extends Controller
 
         if ($validator->fails()) {
             return response([
-                'mesage' => $validator->errors()->first()
+                'message' => $validator->errors()->first()
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -100,7 +100,7 @@ class ProviderController extends Controller
 
         if ($validator->fails()) {
             return response([
-                'mesage' => $validator->errors()->first()
+                'message' => $validator->errors()->first()
             ], Response::HTTP_BAD_REQUEST);
         }
 
