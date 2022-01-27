@@ -1,24 +1,106 @@
-# Lumen PHP Framework
+## Sales - API
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+Esta é uma API de vendas escrita utilizando o framework [Laravel](https://laravel.com/docs) em sua versão mais
+enxuta para APIs, o [Lumen](https://lumen.laravel.com/docs).
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+### Requisitos
 
-## Official Documentation
+Para rodar o projeto é necessário ter as seguintes dependências instaladas em sua máquina:
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+- [Docker](https://docs.docker.com)
+- [docker-compopse](https://docs.docker.com/compose)
+- [make](https://command-not-found.com/make)
 
-## Contributing
+### Instalação
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Copie o arquivo `.env.example` e mude seu nome para `.env`:
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+2. Configure a porta do projeto e a conexão com o banco. Seu arquivo deve ficar parecido com isso:
 
-## License
+```bash
+APP_PORT=9090
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+DB_CONNECTION=mysql
+DB_HOST=sales_api_db
+DB_PORT=3306
+DB_DATABASE=sales_db
+DB_USERNAME=root
+DB_PASSWORD=123456
+```
+
+Isso fará com que a API esteja disponível na porta `9090` da sua máquina.
+
+Observe que a variável `DB_PASSWORD` deve conter o valor definido na chave `MYSQL_ROOT_PASSWORD` contida no arquivo
+`docker-compose.yml`. Assim como a variável `DB_HOST` deve conter o mesmo valor especificado na chave `hostname` do serviço `mysql` do arquivo `docker-compose.yml`.
+
+3. Suba os containers:
+
+```bash
+make up
+```
+
+4. Instale as dependências:
+
+```bash
+make install
+```
+
+5. Crie um banco de dados:
+
+```bash
+make db
+```
+
+O comando entrará no container do MySQL. Crie um banco de dados com o seguinte comando:
+
+```
+create database sales_db;
+```
+
+Ex.:
+
+```
+mysql> create database sales_db;
+Query OK, 1 row affected (0.00 sec)
+```
+
+6. Crie as tabelas do banco:
+
+```bash
+make migrate
+```
+
+Obs.: Pressione CTRL+D para sair do container antes de executar o código acima.
+
+### Testes
+
+Para rodar a suite de testes, é necessário executar os mesmos passos da instalação, porém utilizando o arquivo
+`.env.testing`. Esse é o arquivo utilizado nos testes.
+
+**Obs.:** Recomenda-se a criação de um banco de dados apenas para a execução dos testes.
+
+**Obs.:** Caso o arquivo `.env.testing` não exista, o projeto utilizará as configurações existentes no `.env`. Isso poderá causar erros inesperados e perda total de dados de seu banco de produção durante a execução dos testes.
+
+Depois de tudo configurado, execute o seguinte comando:
+
+```bash
+make test
+```
+
+A saída deve ser algo parecido com:
+
+```bash
+docker exec sales_api vendor/bin/phpunit
+PHPUnit 9.5.13 by Sebastian Bergmann and contributors.
+
+...............................................................  63 / 104 ( 60%)
+.........................................                       104 / 104 (100%)
+
+Time: 00:19.168, Memory: 32.00 MB
+
+OK (104 tests, 300 assertions)
+```
