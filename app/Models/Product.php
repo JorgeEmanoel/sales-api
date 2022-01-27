@@ -17,6 +17,12 @@ class Product extends Model
         'provider_id'
     ];
 
+    /**
+     * Decrease product quantity
+     *
+     * @param int $quantity
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function decreaseQuantity(int $quantity)
     {
         $this->quantity -= $quantity;
@@ -28,6 +34,12 @@ class Product extends Model
         return $this;
     }
 
+    /**
+     * Increase product quantity
+     *
+     * @param int $quantity
+     * @return $this
+     */
     public function increaseQuantity(int $quantity)
     {
         $this->quantity += $quantity;

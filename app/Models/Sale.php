@@ -25,16 +25,22 @@ class Sale extends Model
     public const PAYMENT_METHOD_CARD = 'card';
     public const PAYMENT_METHOD_CASH = 'cash';
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function saleProducts()
     {
         return $this->hasMany(SaleProduct::class);
     }
 
+    /**
+     * @return $this
+     */
     public function calculateTotal()
     {
         $this->total = $this->saleProducts()->get()->reduce(function ($total, $sale_product) {
             return $total + ($sale_product->quantity * $sale_product->paid_unit_price);
-        });
+        }, 0);
 
         return $this;
     }
@@ -45,6 +51,9 @@ class Sale extends Model
         $this->save();
     }
 
+    /**
+     * @return bool
+     */
     public function cancelled()
     {
         return $this->status === self::STATUS_CANCELLED;
