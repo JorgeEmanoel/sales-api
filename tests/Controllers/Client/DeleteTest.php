@@ -44,7 +44,7 @@ class DeleteTest extends TestCase
     /**
      * @test
      */
-    public function itShouldSoftDeleteTheSpecifiedResourceAndRetournItsData()
+    public function itShouldSoftDeleteTheSpecifiedResourceAndReturnItsData()
     {
         $this->json($this->method, $this->path)
             ->seeJsonDoesntContains([
