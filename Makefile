@@ -1,5 +1,7 @@
 up:
 	docker-compose up -d
+bash:
+	docker exec -it sales_api bash
 db:
 	docker exec -it sales_api_db mysql -u root -p'123456'
 test:
