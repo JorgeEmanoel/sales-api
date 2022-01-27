@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Provider extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -15,6 +17,9 @@ class Provider extends Model
         'document_type',
         'shared'
     ];
+
+    public const DOCUMENT_CPF = 'cpf';
+    public const DOCUMENT_CNPJ = 'cnpj';
 
     public function procuts()
     {
