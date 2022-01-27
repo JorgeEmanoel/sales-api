@@ -41,10 +41,20 @@ class ProviderController extends Controller
                 'required',
                 'string',
                 'unique:providers',
-                'min:11',
-                'max:14'
+                Rule::when($request->document_type === Provider::DOCUMENT_CPF, [
+                    'digits:11'
+                ]),
+                Rule::when($request->document_type === Provider::DOCUMENT_CNPJ, [
+                    'digits:14'
+                ]),
             ],
-            'document_type' => 'required|in:cpf,cnpj',
+            'document_type' => [
+                'required',
+                Rule::in([
+                    Provider::DOCUMENT_CPF,
+                    Provider::DOCUMENT_CNPJ
+                ])
+            ],
             'shared' => 'boolean'
         ]);
 
@@ -55,14 +65,14 @@ class ProviderController extends Controller
         }
 
         if (strlen($request->document) == 11 &&
-            $request->document_type !== 'cpf') {
+            $request->document_type !== Provider::DOCUMENT_CPF) {
             return response([
                 'message' => 'Invalid document'
             ]);
         }
 
         if (strlen($request->document) == 14 &&
-            $request->document_type !== 'cnpj') {
+            $request->document_type !== Provider::DOCUMENT_CNPJ) {
             return response([
                 'message' => 'Invalid document'
             ]);
@@ -91,10 +101,19 @@ class ProviderController extends Controller
             'document' => [
                 'string',
                 Rule::unique('providers')->ignore($provider->id),
-                'min:11',
-                'max:14'
+                Rule::when($request->document_type === Provider::DOCUMENT_CPF, [
+                    'digits:11'
+                ]),
+                Rule::when($request->document_type === Provider::DOCUMENT_CNPJ, [
+                    'digits:14'
+                ]),
             ],
-            'document_type' => 'in:cpf,cnpj',
+            'document_type' => [
+                Rule::in([
+                    Provider::DOCUMENT_CPF,
+                    Provider::DOCUMENT_CNPJ
+                ])
+            ],
             'shared' => 'boolean'
         ]);
 
@@ -105,14 +124,14 @@ class ProviderController extends Controller
         }
 
         if (strlen($request->document) == 11 &&
-            $request->document_type !== 'cpf') {
+            $request->document_type !== Provider::DOCUMENT_CPF) {
             return response([
                 'message' => 'Invalid document'
             ]);
         }
 
         if (strlen($request->document) == 14 &&
-            $request->document_type !== 'cnpj') {
+            $request->document_type !== Provider::DOCUMENT_CNPJ) {
             return response([
                 'message' => 'Invalid document'
             ]);
