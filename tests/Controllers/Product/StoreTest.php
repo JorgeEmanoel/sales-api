@@ -4,7 +4,6 @@ namespace Tests\Controllers\Product;
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
-use App\Models\Product;
 use App\Models\Provider;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -55,7 +54,7 @@ class StoreTest extends TestCase
         $this->json($this->method, $this->path, array_merge(
             $this->product_data,
             [
-                    'provider_id' => 2
+                'provider_id' => 2
             ]
         ))
             ->assertResponseStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
