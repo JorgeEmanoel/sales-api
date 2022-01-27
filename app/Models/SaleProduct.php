@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Helpers\Number;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SaleProduct extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'quantity',

@@ -17,8 +17,8 @@ class IndexTest extends TestCase
     /** @var Illuminate\Support\Collection; */
     protected $clients;
 
-    /** @var App\Models\Sale */
-    protected $sale;
+    /** @var Illuminate\Support\Collection; */
+    protected $sales;
 
     protected string $method = 'GET';
     protected string $path = 'sales';
