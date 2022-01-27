@@ -89,14 +89,14 @@ class StoreTest extends TestCase
                 $this->provider_data,
                 [
                     'document' => '1111111111',
-                    'docuument_type' => Provider::DOCUMENT_CPF
+                    'document_type' => Provider::DOCUMENT_CPF
                 ]
             )],
             'invalid document (max)' => [array_merge(
                 $this->provider_data,
                 [
                     'document' => '1111111111111111',
-                    'docuument_type' => Provider::DOCUMENT_CNPJ
+                    'document_type' => Provider::DOCUMENT_CNPJ
                 ]
             )],
             'invalid document (type do not match length) 1' => [array_merge(
