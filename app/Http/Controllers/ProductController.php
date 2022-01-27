@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $providers = Product::query()
+        $products = Product::query()
             ->when($request->provider_id, function ($query) use ($request) {
                 return $query->fromProvider($request->provider_id);
             })
@@ -22,8 +22,8 @@ class ProductController extends Controller
             );
 
         return response([
-            'data' => ProductResource::collection($providers->items()),
-            'pages' => $providers->lastPage()
+            'data' => ProductResource::collection($products->items()),
+            'pages' => $products->lastPage()
         ]);
     }
 
@@ -69,7 +69,8 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'string|max:240',
             'quantity' => 'numeric|min:0',
-            'price' => 'numeric'
+            'price' => 'numeric',
+            'provider_id' => 'filled'
         ]);
 
         if ($validator->fails()) {
